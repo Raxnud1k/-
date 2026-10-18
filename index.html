@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Да</title>
+    <link rel="stylesheet" href="./css.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      body {
+        font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+      }
+
+      .page {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.9s ease,
+          visibility 0s linear 0.9s;
+      }
+      .page.active {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.9s ease;
+      }
+
+      h1 {
+        margin: 0 0 56px;
+        font-weight: 700;
+        font-size: clamp(2.6rem, 10vw, 8rem);
+        line-height: 1.05;
+        letter-spacing: 0.01em;
+        text-align: center;
+        max-width: 14ch;
+      }
+
+      .btn-wrap {
+        position: relative;
+        display: inline-block;
+      }
+
+      .btn {
+        position: relative;
+        z-index: 1;
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-size: 1.25rem;
+        color: #111;
+        padding: 18px 52px;
+        border-radius: 999px;
+        background: #fff;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease,
+          box-shadow 0.3s ease;
+      }
+      .btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        background: radial-gradient(
+          circle 80px at var(--mx, 50%) var(--my, 50%),
+          rgba(245, 88, 109, 0.85),
+          rgba(255, 20, 50, 0) 100%
+        );
+      }
+
+      .btn-wrap:hover .btn::after {
+        opacity: 1;
+      }
+
+      .btn-wrap:hover .btn {
+        box-shadow: 0 0 1px 1px rgba(255, 30, 60, 0.9);
+      }
+
+      .btn:active {
+        transform: scale(0.97);
+      }
+
+      .btn:focus-visible,
+      .ghost:focus-visible {
+        outline: 2px solid #ff1e3c;
+        outline-offset: 4px;
+      }
+
+      #love canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .ghost {
+        position: absolute;
+        bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        transform: translateX(-50%);
+        background: none;
+        border: 0;
+        color: rgba(255, 255, 255, 0.45);
+        font: inherit;
+        font-size: 0.95rem;
+        cursor: pointer;
+        padding: 8px 14px;
+        opacity: 0;
+        transition:
+          opacity 0.8s ease,
+          color 0.2s;
+      }
+
+      .ghost.show {
+        opacity: 1;
+      }
+
+      .ghost:hover {
+        color: #fff;
+      }
+
+      .grad {
+        display: flex;
+        position: absolute;
+        bottom: -280px;
+        left: 0%;
+        border-radius: 50%;
+        filter: blur(50px);
+        width: 100%;
+        height: 400px;
+        background-color: rgb(113, 0, 0);
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grad"></div>
+    <canvas id="fx"></canvas>
+    <div id="light"></div>
+    <div class="grad"></div>
+    <main class="page active" id="home">
+      <h1>Амина это для тебя</h1>
+      <div class="btn-wrap" id="wrap">
+        <button class="btn" id="go" type="button">Открыть</button>
+      </div>
+    </main>
+
+    <section class="page" id="love" aria-label="I LOVE YOU">
+      <canvas id="c"></canvas>
+      <button class="ghost" id="again" type="button"></button>
+    </section>
+
+    <script src="./js.js"></script>
+  </body>
+</html>
